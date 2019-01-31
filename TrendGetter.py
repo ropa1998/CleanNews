@@ -1,29 +1,25 @@
 from selenium import webdriver
 
 
-def getTrends(locations):
+def getTrends_Trends24(locations):
     browser = webdriver.Firefox()
     trends_url = "https://trends24.in/"
+    trends_per_region = {}
 
     for location in locations:
         browser.get(trends_url + location)
-        location_retrieved = browser.find_element_by_xpath('//*[@id="app-bar-toggle"]')
-        location_retrieved_string = location_retrieved.get_attribute("title")
-        print location_retrieved_string
-
         trend_card_list = browser.find_element_by_class_name("trend-card__list")
         trend_list = trend_card_list.find_elements_by_tag_name("li")
+        trend_list_string = []
         for trend in trend_list:
-            print trend.get_attribute("title")
+            trend_list_string.append(trend.get_attribute("title"))
+        trends_per_region[location] = trend_list_string
 
-        # trends = trend_list.find_element_by_tag_name("li")
-        # for trend in trends:
-        #     title = trend.get_attribute("title")
-        #     print title
+    return trends_per_region
 
-    # browser.get('http://seleniumhq.org/')
+# LOCATIONS = ["", "argentina", "argentina/buenos-aires"]
+LOCATIONS = [""]
 
-
-LOCATIONS = ["", "argentina", "argentina/buenos-aires"]
-
-getTrends(LOCATIONS)
+trends_per_region = getTrends_Trends24(LOCATIONS)
+for elem in trends_per_region.get(""):
+    print elem
