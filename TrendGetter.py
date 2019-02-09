@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+import re
 
 options = Options()
 options.add_argument('--headless')
@@ -12,21 +13,29 @@ def cleanTrends(trends_per_region):
     :return: the same map, but clean (no hashtags or camelcase format)
     """
     # TODO optimize this algorithm
+    # TODO solve for camel casing that is not actually camel casing. For example: BOCAxESPN, SCOvIRE
     for region in trends_per_region:
+
         cleanTrends = []
         removeTrends = []
         for trend in trends_per_region[region]:
-            if "#" in trend:
-                # print trend + "has a hashtag"
-                new_trend = trend.replace("#",'')
-                cleanTrends.append(new_trend)
-                removeTrends.append(trend)
+            # takes hashtags away
+            new_trend = trend.replace("#", '')
+            # separates camelcase
+            splitted = re.sub("(?!^)([A-Z][a-z]+)", r' \1', new_trend).split()
+            new_trend = ''
+            for elem in splitted:
+                if len(new_trend) == 0:
+                    new_trend = elem
+                else:
+                    new_trend = new_trend + " " + elem
+            cleanTrends.append(new_trend)
+            removeTrends.append(trend)
         for elem in removeTrends:
             trends_per_region[region].remove(elem)
         trends_per_region[region].extend(cleanTrends)
+
     return trends_per_region
-
-
 
 
 def getTrends_Trends24(locations, invisible_window=True):
