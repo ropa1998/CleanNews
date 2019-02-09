@@ -5,6 +5,24 @@ options = Options()
 options.add_argument('--headless')
 
 
+def cleanHashtags(trends_per_region):
+    for region in trends_per_region:
+        cleanTrends = []
+        removeTrends = []
+        for trend in trends_per_region[region]:
+            if "#" in trend:
+                # print trend + "has a hashtag"
+                new_trend = trend.replace("#",'')
+                cleanTrends.append(new_trend)
+                removeTrends.append(trend)
+        for elem in removeTrends:
+            trends_per_region[region].remove(elem)
+        trends_per_region[region].extend(cleanTrends)
+    return trends_per_region
+
+
+
+
 def getTrends_Trends24(locations, invisible_window=True):
     """
     This method returns a map with locations that reference a list
@@ -18,11 +36,8 @@ def getTrends_Trends24(locations, invisible_window=True):
     :param locations: must be formatted to fit the standard for this page. It usually trends24.in/*country*/*region*
     :return: a map of locations:list of trends.
     """
-    if invisible_window:
-        browser = webdriver.Firefox(options=options)
-    else:
-        browser = webdriver.Firefox()
 
+    browser = getBrowser_Firefox(invisible_window)
     trends_url = "https://trends24.in/"
     trends_per_region = {}
 
@@ -38,4 +53,14 @@ def getTrends_Trends24(locations, invisible_window=True):
             trend_list_string.append(trend.get_attribute("title"))
         trends_per_region[location] = trend_list_string
 
+    browser.quit()
+
+    trends_per_region = cleanHashtags(trends_per_region)
     return trends_per_region
+
+
+def getBrowser_Firefox(invisible_window):
+    if invisible_window:
+        return webdriver.Firefox(options=options)
+    else:
+        return webdriver.Firefox()
