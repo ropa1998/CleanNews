@@ -1,9 +1,5 @@
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
 import re
-
-options = Options()
-options.add_argument('--headless')
 
 
 def cleanTrends(trends_per_region):
@@ -15,7 +11,6 @@ def cleanTrends(trends_per_region):
     # TODO optimize this algorithm
     # TODO solve for camel casing that is not actually camel casing. For example: BOCAxESPN, SCOvIRE
     for region in trends_per_region:
-
         cleanTrends = []
         removeTrends = []
         for trend in trends_per_region[region]:
@@ -38,7 +33,7 @@ def cleanTrends(trends_per_region):
     return trends_per_region
 
 
-def getTrends_Trends24(locations, invisible_window=True):
+def getTrends_Trends24(locations, browser):
     """
     This method returns a map with locations that reference a list
     of trends for that specific location. The site that is being used to get the information is
@@ -52,7 +47,6 @@ def getTrends_Trends24(locations, invisible_window=True):
     :return: a map of locations:list of trends.
     """
 
-    browser = getBrowser_Firefox(invisible_window)
     trends_url = "https://trends24.in/"
     trends_per_region = {}
 
@@ -68,14 +62,8 @@ def getTrends_Trends24(locations, invisible_window=True):
             trend_list_string.append(trend.get_attribute("title"))
         trends_per_region[location] = trend_list_string
 
-    browser.quit()
-
     trends_per_region = cleanTrends(trends_per_region)
     return trends_per_region
 
 
-def getBrowser_Firefox(invisible_window):
-    if invisible_window:
-        return webdriver.Firefox(options=options)
-    else:
-        return webdriver.Firefox()
+
