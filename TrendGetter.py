@@ -1,24 +1,30 @@
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+
+options = Options()
+options.add_argument('--headless')
 
 
-def getTrends_Trends24(locations):
+def getTrends_Trends24(locations, invisible_window = True):
     """
     This method returns a map with locations that reference a list
     of trends for that specific location. The site that is being used to get the information is
     trends24.in, which presents a list of trends for specific locations in Twitter.
+    :param invisible_window: defines whether the window where the infomation will be
+    retrieved from will be shown in the screen or not. Set originally in True. False should be used
+    for debugging.
     :param locations: must be formatted to fit the standard for this page. It usually trends24.in/*country*/*region*
     :return: a map of locations:list of trends.
     """
-    from selenium.webdriver.firefox.options import Options
+    if invisible_window:
+        browser = webdriver.Firefox(options=options)
+    else:
+        browser = webdriver.Firefox()
 
-    options = Options()
-    options.add_argument('--headless')
-
-    browser = webdriver.Firefox(options=options)
     trends_url = "https://trends24.in/"
     trends_per_region = {}
 
-    if(locations == False):
+    if locations == False:
         return trends_per_region
 
     for location in locations:

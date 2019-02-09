@@ -14,3 +14,8 @@ class TestGetTrends(TestCase):
         LOCATIONS = []
         trends_per_region = TrendGetter.getTrends_Trends24(LOCATIONS)
         self.assertFalse(trends_per_region)
+
+    def test_visualization_test(self):
+        LOCATIONS = [""]
+        trends_per_region = TrendGetter.getTrends_Trends24(LOCATIONS, invisible_window=False)
+        self.assertTrue(len(trends_per_region) == 1)
