@@ -2,6 +2,13 @@ from selenium import webdriver
 
 
 def getTrends_Trends24(locations):
+    """
+    This method returns a map with locations that reference a list
+    of trends for that specific location. The site that is being used to get the information is
+    trends24.in, which presents a list of trends for specific locations in Twitter.
+    :param locations: must be formatted to fit the standard for this page. It usually trends24.in/*country*/*region*
+    :return: a map of locations:list of trends.
+    """
     browser = webdriver.Firefox()
     trends_url = "https://trends24.in/"
     trends_per_region = {}
@@ -16,6 +23,7 @@ def getTrends_Trends24(locations):
         trends_per_region[location] = trend_list_string
 
     return trends_per_region
+
 
 # LOCATIONS = ["", "argentina", "argentina/buenos-aires"]
 LOCATIONS = [""]
