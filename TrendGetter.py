@@ -9,9 +9,17 @@ def getTrends_Trends24(locations):
     :param locations: must be formatted to fit the standard for this page. It usually trends24.in/*country*/*region*
     :return: a map of locations:list of trends.
     """
-    browser = webdriver.Firefox()
+    from selenium.webdriver.firefox.options import Options
+
+    options = Options()
+    options.add_argument('--headless')
+
+    browser = webdriver.Firefox(options=options)
     trends_url = "https://trends24.in/"
     trends_per_region = {}
+
+    if(locations == False):
+        return trends_per_region
 
     for location in locations:
         browser.get(trends_url + location)
@@ -23,11 +31,3 @@ def getTrends_Trends24(locations):
         trends_per_region[location] = trend_list_string
 
     return trends_per_region
-
-
-# LOCATIONS = ["", "argentina", "argentina/buenos-aires"]
-LOCATIONS = [""]
-
-trends_per_region = getTrends_Trends24(LOCATIONS)
-for elem in trends_per_region.get(""):
-    print elem
