@@ -6,6 +6,7 @@ options.add_argument('--headless')
 
 
 def cleanHashtags(trends_per_region):
+    # TODO optimize this algorithm
     for region in trends_per_region:
         cleanTrends = []
         removeTrends = []
