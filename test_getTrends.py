@@ -23,7 +23,7 @@ class TestGetTrends(TestCase):
     def test_cleanHashtag(self):
         LOCATIONS = [""]
         trends_per_region = TrendGetter.getTrends_Trends24(LOCATIONS, invisible_window=False)
-        trends_per_region = TrendGetter.cleanHashtags(trends_per_region)
+        trends_per_region = TrendGetter.cleanTrends(trends_per_region)
         for region in trends_per_region:
             for trend in trends_per_region[region]:
                 self.assertFalse("#" in trend)

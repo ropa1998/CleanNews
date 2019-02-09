@@ -5,7 +5,12 @@ options = Options()
 options.add_argument('--headless')
 
 
-def cleanHashtags(trends_per_region):
+def cleanTrends(trends_per_region):
+    """
+    Takes all the trends an cleans them, meaning it takes away all hashtags and camelcase, to make better searches.
+    :param trends_per_region: the map with the regions and the trends for each region
+    :return: the same map, but clean (no hashtags or camelcase format)
+    """
     # TODO optimize this algorithm
     for region in trends_per_region:
         cleanTrends = []
@@ -56,7 +61,7 @@ def getTrends_Trends24(locations, invisible_window=True):
 
     browser.quit()
 
-    trends_per_region = cleanHashtags(trends_per_region)
+    trends_per_region = cleanTrends(trends_per_region)
     return trends_per_region
 
 

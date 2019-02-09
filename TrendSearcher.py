@@ -5,6 +5,7 @@ from TrendGetter import getBrowser_Firefox
 
 
 def TrendSearch_Google(trends_per_region):
+
     browser = getBrowser_Firefox(False)
 
     for region in trends_per_region:
