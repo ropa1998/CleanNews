@@ -5,12 +5,14 @@ options = Options()
 options.add_argument('--headless')
 
 
-def getTrends_Trends24(locations, invisible_window = True):
+def getTrends_Trends24(locations, invisible_window=True):
     """
     This method returns a map with locations that reference a list
     of trends for that specific location. The site that is being used to get the information is
     trends24.in, which presents a list of trends for specific locations in Twitter.
-    :param invisible_window: defines whether the window where the infomation will be
+    The method is specifically made for a websites because of its design. The same method
+    cannot be used for other websites because not all pages share format.
+    :param invisible_window: defines whether the window where the information will be
     retrieved from will be shown in the screen or not. Set originally in True. False should be used
     for debugging.
     :param locations: must be formatted to fit the standard for this page. It usually trends24.in/*country*/*region*
@@ -24,7 +26,7 @@ def getTrends_Trends24(locations, invisible_window = True):
     trends_url = "https://trends24.in/"
     trends_per_region = {}
 
-    if locations == False:
+    if not locations:
         return trends_per_region
 
     for location in locations:
