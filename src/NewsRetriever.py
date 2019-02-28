@@ -17,8 +17,10 @@ def TrendSearch_Google(regions, browser):
 def TrendSearchPerRegionThroughSpecificMedia(regions, browser):
     for region in regions:
         for medium in region.getMedia():
-            for trend in region.getTrends():
-                browser.get(medium)
-                articles = browser.find_elements_by_tag_name('article')
-                for article in articles:
-                    print article.text
+            browser.get(medium)
+            articles = browser.find_elements_by_tag_name('h1')
+            articles.extend(browser.find_elements_by_tag_name('h2'))
+            articles.extend(browser.find_elements_by_tag_name('h3'))
+            for article in articles:
+                print "------------"
+                print article.text
