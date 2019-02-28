@@ -5,10 +5,10 @@ from selenium.webdriver.firefox.options import Options
 from selenium import webdriver
 
 
-def TrendSearch_Google(trends_per_region, browser):
+def TrendSearch_Google(regions, browser):
 
-    for region in trends_per_region:
-        for trend in trends_per_region[region]:
+    for region in regions:
+        for trend in region.getTrends():
             browser.get('http://www.google.com')
             search = browser.find_element_by_name('q')
             search.send_keys(trend)

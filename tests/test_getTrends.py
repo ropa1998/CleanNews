@@ -1,5 +1,5 @@
 from unittest import TestCase
-from main import TrendGetter
+from main import NewsGetter
 from main.Region import Region
 from main.TrendSearcher import getBrowser_Firefox
 import test_region
@@ -23,24 +23,24 @@ class TestGetTrends(TestCase):
 
     def test_getting_nonEmptyLocations(self):
         REGIONS = [self.arg_region,self.world_region,self.buenos_aires_region]
-        regions = TrendGetter.getTrends_Trends24(REGIONS,browser=self.brw)
+        regions = NewsGetter.getTrends_Trends24(REGIONS, browser=self.brw)
         self.assertTrue(regions)
         self.assertTrue(len(regions) == 3)
 
     def test_gettingEmptyLocations(self):
         REGIONS = []
-        regions = TrendGetter.getTrends_Trends24(REGIONS,browser=self.brw)
+        regions = NewsGetter.getTrends_Trends24(REGIONS, browser=self.brw)
         for region in regions:
             self.assertFalse(region.getTrends())
 
     def test_visualization(self):
         REGIONS = [self.arg_region]
-        regions = TrendGetter.getTrends_Trends24(REGIONS,browser=self.brw)
+        regions = NewsGetter.getTrends_Trends24(REGIONS, browser=self.brw)
         self.assertTrue(len(regions) == 1)
 
     def test_cleanHashtag(self):
         REGIONS = [self.arg_region,self.world_region,self.buenos_aires_region]
-        regions = TrendGetter.getTrends_Trends24(REGIONS,browser=self.brw)
+        regions = NewsGetter.getTrends_Trends24(REGIONS, browser=self.brw)
         for region in regions:
             for trend in region.getTrends():
                 self.assertFalse("#" in trend)

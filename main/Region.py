@@ -14,8 +14,8 @@ class Region:
     def getIdentifier(self):
         return self.identifier
 
-    def addTrend(self, trend):
-        self.trends.append(trend)
+    def changeTrends(self, trends):
+        self.trends = trends
 
     def getTrends(self):
         return self.trends
