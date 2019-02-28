@@ -1,6 +1,9 @@
-import NewsGetter
-import TrendSearcher
-from main.Region import Region
+from Region import Region
+from selenium.webdriver.firefox.options import Options
+from selenium import webdriver
+
+options = Options()
+options.add_argument('--headless')
 
 
 def getAutomaticRegions():
@@ -21,18 +24,8 @@ def getAutomaticRegions():
     return Regions
 
 
-browser = TrendSearcher.getBrowser_Firefox(invisible_window=False)
-
-REGIONS = getAutomaticRegions()
-
-regions_with_trends = NewsGetter.getTrends_Trends24(REGIONS, browser)
-
-# for region in regions_with_trends:
-#     print "--------------"
-#     print region.identifier
-#     print region.getTrends()
-
-news = TrendSearcher.TrendSearch_Google(regions_with_trends, browser)
-
-
-browser.quit()
+def getBrowser_Firefox(invisible_window):
+    if invisible_window:
+        return webdriver.Firefox(options=options)
+    else:
+        return webdriver.Firefox()
