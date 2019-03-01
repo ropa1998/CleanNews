@@ -24,6 +24,16 @@ def getAutomaticRegions():
     return Regions
 
 
+def getArgRegion():
+    arg_media = ["https://www.lanacion.com.ar/", "https://www.clarin.com/", "https://www.pagina12.com.ar/"]
+    arg_identifier = "argentina"
+    arg_region = Region(media=arg_media, identifier=arg_identifier)
+
+    Regions = [arg_region]
+
+    return Regions
+
+
 def getBrowser_Firefox(invisible_window):
     if invisible_window:
         return webdriver.Firefox(options=options)

@@ -3,6 +3,7 @@ class Region:
     media = []
     identifier = ""
     trends = []
+    useful_links = []
 
     def __init__(self, media=None, identifier=None):
         self.media = media
@@ -19,3 +20,6 @@ class Region:
 
     def getTrends(self):
         return self.trends
+
+    def addUsefulLink(self, link):
+        self.useful_links.append(link)

@@ -1,7 +1,6 @@
 import time
 
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.remote.webelement import WebElement
 
 
 def TrendSearch_Google(regions, browser):
@@ -18,9 +17,22 @@ def TrendSearchPerRegionThroughSpecificMedia(regions, browser):
     for region in regions:
         for medium in region.getMedia():
             browser.get(medium)
-            articles = browser.find_elements_by_tag_name('h1')
-            articles.extend(browser.find_elements_by_tag_name('h2'))
-            articles.extend(browser.find_elements_by_tag_name('h3'))
+            scrollToTheBottom(browser)
+            articles = browser.find_elements_by_tag_name('article')
             for article in articles:
-                print "------------"
-                print article.text
+                for trend in region.getTrends():
+                    if trend in article.text:
+                        region.addUsefulLink(article)
+
+
+def scrollToTheBottom(browser):
+    lenOfPage = browser.execute_script(
+        "window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
+    match = False
+    while not match:
+        lastCount = lenOfPage
+        time.sleep(3)
+        lenOfPage = browser.execute_script(
+            "window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
+        if lastCount == lenOfPage:
+            match = True
