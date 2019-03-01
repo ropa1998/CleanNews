@@ -3,7 +3,7 @@ class Region:
     media = []
     identifier = ""
     trends = []
-    useful_links = []
+    useful_links = {}
 
     def __init__(self, media=None, identifier=None):
         self.media = media
@@ -21,5 +21,12 @@ class Region:
     def getTrends(self):
         return self.trends
 
-    def addUsefulLink(self, link):
-        self.useful_links.append(link)
+    def addUsefulLink(self, link, trend):
+        if trend in self.useful_links:
+            self.useful_links[trend].append(link)
+        else:
+            new_list = [link]
+            self.useful_links[trend] = new_list
+
+    def get_news(self):
+        return self.useful_links

@@ -22,7 +22,7 @@ def TrendSearchPerRegionThroughSpecificMedia(regions, browser):
             for article in articles:
                 for trend in region.getTrends():
                     if trend in article.text:
-                        region.addUsefulLink(article)
+                        region.addUsefulLink(article, trend)
 
 
 def scrollToTheBottom(browser):

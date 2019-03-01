@@ -1,12 +1,15 @@
 import TrendRetriever
 import NewsRetriever
-from Utilities import getArgRegion, getBrowser_Firefox
+from Utilities import getArgRegion, getBrowser_Firefox, getAutomaticRegions
 
 browser = getBrowser_Firefox(invisible_window=False)
 
-REGIONS = getArgRegion()
+REGIONS = getAutomaticRegions()
 
 regions_with_trends = TrendRetriever.getTrends_Trends24(REGIONS, browser)
-news = NewsRetriever.TrendSearchPerRegionThroughSpecificMedia(regions_with_trends, browser)
+regions_with_news = NewsRetriever.TrendSearchPerRegionThroughSpecificMedia(regions_with_trends, browser)
+
+for region in regions_with_news:
+    print region.get
 
 browser.quit()
