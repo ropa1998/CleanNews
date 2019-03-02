@@ -1,8 +1,10 @@
+from selenium.common.exceptions import NoSuchElementException
+
 import TrendRetriever
 import NewsRetriever
 from Utilities import getArgRegion, getBrowser_Firefox, getAutomaticRegions
 
-browser = getBrowser_Firefox(invisible_window=False)
+browser = getBrowser_Firefox(invisible_window=True)
 
 regions = getArgRegion()
 
@@ -14,6 +16,9 @@ for region in regions:
     for trend, article_list in region.get_news().items():
         print trend
         for article in article_list:
-            print article.text
+            try:
+                print article.text
+            except NoSuchElementException:
+                print "An error ocurred."
 
 browser.quit()

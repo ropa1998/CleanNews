@@ -2,6 +2,8 @@ import time
 
 from selenium.webdriver.common.keys import Keys
 
+from Article import Article
+
 
 def TrendSearch_Google(regions, browser):
     for region in regions:
@@ -18,20 +20,16 @@ def TrendSearchPerRegionThroughSpecificMedia(regions, browser):
         for medium in region.getMedia():
             browser.get(medium)
             scrollToTheBottom(browser)
-            for trend in region.getTrends():
-                first_part = "//*[contains(text(),"
-                second_part = "'"+trend+"')]"
-                query = first_part+second_part
-                matches = browser.find_elements_by_xpath(query)
-                for match in matches:
-                    region.addUsefulLink(match,trend)
-
-            # articles = browser.find_elements_by_tag_name('article')
-            # for article in articles:
-            #     for trend in region.getTrends():
-            #         if trend in article.text:
-            #             region.addUsefulLink(article, trend)
-
+            query = "//article"
+            matches = browser.find_elements_by_xpath(query)
+            for match in matches:
+                for trend in region.getTrends():
+                    if trend in match.text:
+                        try:
+                            article = Article(match.text, match.find_element_by_tag_name("a").get_attribute('href'))
+                            region.addUsefulLink(article, trend)
+                        except:
+                            print "That element had no link"
 
 def scrollToTheBottom(browser):
     lenOfPage = browser.execute_script(
