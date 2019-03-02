@@ -15,7 +15,7 @@ def cleanTrends(trend):
     # removes hashtags
     new_trend = trend.replace("#", '')
     # separates camelcase
-    split = re.sub('(?!^)([A-Z][a-z]+)', r' \1', new_trend).split()
+    split = re.sub("(?!^)([A-Z][a-z]+)", r' \1', new_trend).split()
     new_trend = ''
     for elem in split:
         if len(new_trend) == 0:
@@ -47,6 +47,7 @@ def getTrends_Trends24(regions, browser):
         browser.get(trends_url + region.identifier)
         trend_card_list = browser.find_element_by_id("trend-list")
         trend_list = trend_card_list.find_elements_by_tag_name("li")
+        trend_list = trend_list[:50]
         trend_list_string = []
         for trend in trend_list:
             title = trend.get_attribute("title")

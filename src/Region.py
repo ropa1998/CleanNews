@@ -23,7 +23,8 @@ class Region:
 
     def addUsefulLink(self, link, trend):
         if trend in self.useful_links:
-            self.useful_links[trend].append(link)
+            if link not in self.useful_links[trend]:
+                self.useful_links[trend].append(link)
         else:
             new_list = [link]
             self.useful_links[trend] = new_list
