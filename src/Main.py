@@ -4,7 +4,7 @@ import TrendRetriever
 import NewsRetriever
 from Utilities import getArgRegion, getBrowser_Firefox, getAutomaticRegions
 
-browser = getBrowser_Firefox(invisible_window=True)
+browser = getBrowser_Firefox(invisible_window=False)
 
 regions = getArgRegion()
 
@@ -17,7 +17,10 @@ for region in regions:
         print trend
         for article in article_list:
             try:
-                print article.text
+                print "-------"
+                print article.getTitle()
+                print article.getLink()
+                print "-------"
             except NoSuchElementException:
                 print "An error ocurred."
 

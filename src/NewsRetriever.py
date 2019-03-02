@@ -22,14 +22,17 @@ def TrendSearchPerRegionThroughSpecificMedia(regions, browser):
             scrollToTheBottom(browser)
             query = "//article"
             matches = browser.find_elements_by_xpath(query)
-            for match in matches:
+            articles = []
+            try:
+                for match in matches:
+                    article = Article(match.text, match.find_element_by_tag_name("a").get_attribute('href'))
+                    articles.append(article)
+            except:
+                print
+            for article in articles:
                 for trend in region.getTrends():
-                    if trend in match.text:
-                        try:
-                            article = Article(match.text, match.find_element_by_tag_name("a").get_attribute('href'))
-                            region.addUsefulLink(article, trend)
-                        except:
-                            print "That element had no link"
+                    if trend in article.title:
+                        region.addUsefulLink(article, trend)
 
 def scrollToTheBottom(browser):
     lenOfPage = browser.execute_script(
