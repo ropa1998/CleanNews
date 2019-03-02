@@ -47,7 +47,6 @@ def getTrends_Trends24(regions, browser):
         browser.get(trends_url + region.identifier)
         trend_card_list = browser.find_element_by_id("trend-list")
         trend_list = trend_card_list.find_elements_by_tag_name("li")
-        trend_list = trend_list[:50]
         trend_list_string = []
         for trend in trend_list:
             title = trend.get_attribute("title")
