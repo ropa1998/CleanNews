@@ -4,12 +4,12 @@ from Utilities import getArgRegion, getBrowser_Firefox, getAutomaticRegions
 
 browser = getBrowser_Firefox(invisible_window=False)
 
-REGIONS = getArgRegion()
+regions = getArgRegion()
 
-regions_with_trends = TrendRetriever.getTrends_Trends24(REGIONS, browser)
-regions_with_news = NewsRetriever.TrendSearchPerRegionThroughSpecificMedia(regions_with_trends, browser)
+TrendRetriever.getTrends_Trends24(regions, browser)
+NewsRetriever.TrendSearchPerRegionThroughSpecificMedia(regions, browser)
 
-for region in regions_with_news:
+for region in regions:
     print region.identifier
     for trend, article_list in region.get_news().items():
         print trend
