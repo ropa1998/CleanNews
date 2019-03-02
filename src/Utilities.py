@@ -26,7 +26,7 @@ def getAutomaticRegions():
 
 def getArgRegion():
     arg_media = ["https://www.lanacion.com.ar/", "https://www.clarin.com/", "https://www.pagina12.com.ar/"]
-    # arg_media = ["https://www.lanacion.com.ar/"]
+    # arg_media = ["https://www.clarin.com/"]
     arg_identifier = "argentina"
     arg_region = Region(media=arg_media, identifier=arg_identifier)
 
