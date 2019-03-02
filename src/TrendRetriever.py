@@ -53,6 +53,7 @@ def getTrends_Trends24(regions, browser):
             title = trend.get_attribute("title")
             clean_trend = cleanTrends(title)
             trend_list_string.append(clean_trend)
+        trend_list_string = set(trend_list_string)
         region.updateTrends(trend_list_string)
 
     return regions
