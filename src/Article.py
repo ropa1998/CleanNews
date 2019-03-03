@@ -1,7 +1,7 @@
 class Article:
     link = ""
     title = ""
-    body = ""
+    body = []
 
     def __init__(self, title=title, link=link):
         self.link = link
@@ -17,9 +17,9 @@ class Article:
         self.body = body
 
     def __eq__(self, other):
-        if other.link == self.link:
+        if other.title == self.title:
             return True
         return False
 
     def __hash__(self):
-        return hash(self.link)
+        return hash(self.title)

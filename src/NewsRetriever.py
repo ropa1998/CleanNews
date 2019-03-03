@@ -51,15 +51,16 @@ def scrollToTheBottom(browser):
 
 
 def BodyRetriever(regions, browser):
+    browser.set_page_load_timeout(60)
     for region in regions:
         for trend, article_list in region.get_news().items():
             for article in article_list:
                 try:
                     browser.get(article.getLink())
                     texts = browser.find_elements_by_tag_name("p")
-                    full_text = ""
+                    full_text = []
                     for text in texts:
-                        full_text = full_text + text.text
+                        full_text.append(text.text)
                     article.setBody(full_text)
                 except TimeoutException:
                     print "Timeout exception"

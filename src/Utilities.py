@@ -1,3 +1,5 @@
+from selenium.common.exceptions import NoSuchElementException
+
 from Region import Region
 from selenium.webdriver.firefox.options import Options
 from selenium import webdriver
@@ -25,8 +27,8 @@ def getAutomaticRegions():
 
 
 def getArgRegion():
-    arg_media = ["https://www.lanacion.com.ar/", "https://www.clarin.com/", "https://www.pagina12.com.ar/"]
-    # arg_media = ["https://www.clarin.com/"]
+    # arg_media = ["https://www.lanacion.com.ar/", "https://www.clarin.com/", "https://www.pagina12.com.ar/"]
+    arg_media = ["https://www.clarin.com/"]
     arg_identifier = "argentina"
     arg_region = Region(media=arg_media, identifier=arg_identifier)
 
@@ -40,3 +42,20 @@ def getBrowser_Firefox(invisible_window):
         return webdriver.Firefox(options=options)
     else:
         return webdriver.Firefox()
+
+
+def print_regions(regions):
+    for region in regions:
+        print region.identifier
+        for trend, article_list in region.get_news().items():
+            print trend
+            for article in article_list:
+                try:
+                    print "-------"
+                    print article.getTitle()
+                    print article.getLink()
+                    for text in article.body:
+                        print text
+                    print "-------"
+                except NoSuchElementException:
+                    print "An error ocurred."
