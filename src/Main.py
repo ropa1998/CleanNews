@@ -24,4 +24,21 @@ for region in regions:
             except NoSuchElementException:
                 print "An error ocurred."
 
+NewsRetriever.BodyRetriever(regions, browser)
+
+for region in regions:
+    print region.identifier
+    for trend, article_list in region.get_news().items():
+        print trend
+        for article in article_list:
+            try:
+                print "-------"
+                print article.getTitle()
+                print article.getLink()
+                print article.body
+                print "-------"
+            except NoSuchElementException:
+                print "An error ocurred."
+
+
 browser.quit()

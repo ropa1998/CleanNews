@@ -1,6 +1,7 @@
 class Article:
     link = ""
     title = ""
+    body = ""
 
     def __init__(self, title=title, link=link):
         self.link = link
@@ -11,3 +12,14 @@ class Article:
 
     def getLink(self):
         return self.link
+
+    def setBody(self, body):
+        self.body = body
+
+    def __eq__(self, other):
+        if other.link == self.link:
+            return True
+        return False
+
+    def __hash__(self):
+        return hash(self.link)

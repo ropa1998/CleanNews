@@ -29,5 +29,9 @@ class Region:
             new_list = [link]
             self.useful_links[trend] = new_list
 
+    def cleanArticles(self):
+        for trend, article_list in self.get_news().items():
+            self.useful_links[trend] = set(self.useful_links[trend])
+
     def get_news(self):
         return self.useful_links

@@ -1,5 +1,6 @@
 import time
 
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 
 from Article import Article
@@ -33,6 +34,8 @@ def TrendSearchPerRegionThroughSpecificMedia(regions, browser):
                 for trend in region.getTrends():
                     if trend in article.title:
                         region.addUsefulLink(article, trend)
+        region.cleanArticles()
+
 
 def scrollToTheBottom(browser):
     lenOfPage = browser.execute_script(
@@ -45,3 +48,19 @@ def scrollToTheBottom(browser):
             "window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
         if lastCount == lenOfPage:
             match = True
+
+
+def BodyRetriever(regions, browser):
+    for region in regions:
+        for trend, article_list in region.get_news().items():
+            for article in article_list:
+                try:
+                    browser.get(article.getLink())
+                    texts = browser.find_elements_by_tag_name("p")
+                    full_text = ""
+                    for text in texts:
+                        full_text = full_text + text.text
+                    article.setBody(full_text)
+                except TimeoutException:
+                    print "Timeout exception"
+
