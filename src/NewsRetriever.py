@@ -26,7 +26,7 @@ def TrendSearchPerRegionThroughSpecificMedia(regions, browser):
             articles = []
             try:
                 for match in matches:
-                    article = Article(match.text, match.find_element_by_tag_name("a").get_attribute('href'))
+                    article = Article(match.text, match.find_element_by_tag_name("a").get_attribute('href'), medium)
                     articles.append(article)
             except:
                 print
@@ -57,11 +57,11 @@ def BodyRetriever(regions, browser):
             for article in article_list:
                 try:
                     browser.get(article.getLink())
-                    texts = browser.find_elements_by_tag_name("p")
-                    full_text = []
-                    for text in texts:
-                        full_text.append(text.text)
-                    article.setBody(full_text)
+                    paragraphs = browser.find_elements_by_tag_name("p")
+                    full_text = ""
+                    for paragraph in paragraphs:
+                        if len(paragraph.text) > 100:
+                            full_text = full_text + "\n" + paragraph.text
+                        article.setBody(full_text)
                 except TimeoutException:
                     print "Timeout exception"
-
