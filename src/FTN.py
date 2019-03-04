@@ -10,6 +10,7 @@ app = Flask(__name__)
 def main_screen():
     # TODO add a way to choose which region you want analyzed.
     regions = process_regions()
+    # regions = getArgRegion()
     return render_template('layout.html', regions=regions)
 
 

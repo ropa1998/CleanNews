@@ -21,6 +21,7 @@ def TrendSearchPerRegionThroughSpecificMedia(regions, browser):
         for medium in region.getMedia():
             browser.get(medium)
             scrollToTheBottom(browser)
+            print medium
             query = "//article"
             matches = browser.find_elements_by_xpath(query)
             articles = []

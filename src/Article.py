@@ -24,4 +24,4 @@ class Article:
         return False
 
     def __hash__(self):
-        return hash(self.title)
+        return hash(self.link+self.title)
