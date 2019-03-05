@@ -1,11 +1,18 @@
 import time
 
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchAttributeException, NoSuchElementException, \
+    WebDriverException
 from selenium.webdriver.common.keys import Keys
+import datetime
 
 from Article import Article
+
 # todo add descriptive exceptions
 # todo improve system monitoring. Inform the user about what is being analyzed.
+# todo add documentation
+# todo add README
+from Utilities import monitor_prompt
+
 
 def TrendSearch_Google(regions, browser):
     for region in regions:
@@ -18,28 +25,33 @@ def TrendSearch_Google(regions, browser):
 
 
 def TrendSearchPerRegionThroughSpecificMedia(regions, browser):
-    try:
-        for region in regions:
-            for medium in region.getMedia():
+    for region in regions:
+        for medium in region.getMedia():
+            try:
                 browser.get(medium)
                 scrollToTheBottom(browser)
-                print medium
+                print monitor_prompt("Reached the bottom of " + medium + ". ")
                 query = "//article"
                 matches = browser.find_elements_by_xpath(query)
                 articles = []
-                try:
-                    for match in matches:
-                        article = Article(match.text, match.find_element_by_tag_name("a").get_attribute('href'), medium)
-                        articles.append(article)
-                except:
-                    print "Not possible to create article from "+match.text
-                for article in articles:
-                    for trend in region.getTrends():
-                        if trend in article.title:
-                            region.addUsefulLink(article, trend)
-            region.cleanArticles()
-    except:
-        print "Unable to access website"
+            except TimeoutException:
+                print "Timeout exception: site" + medium.link + "did not completely load after some time"
+            except WebDriverException:
+                print "Browser error. Skipping " + medium + "."
+            try:
+                for match in matches:
+                    article = Article(match.text, match.find_element_by_tag_name("a").get_attribute('href'), medium)
+                    articles.append(article)
+            except NoSuchAttributeException:
+                print "Not possible to create article from " + match.text + ". Missing attribute"
+            except NoSuchElementException:
+                print "Not possible to create article from " + match.text + ". Missing element"
+            for article in articles:
+                for trend in region.getTrends():
+                    if trend in article.title:
+                        region.addUsefulLink(article, trend)
+            print monitor_prompt("Created articles for " + medium + ". ")
+        region.cleanArticles()
 
 
 def scrollToTheBottom(browser):
@@ -68,5 +80,6 @@ def BodyRetriever(regions, browser):
                         if len(paragraph.text) > 100:
                             full_text = full_text + "\n" + paragraph.text
                         article.setBody(full_text)
-                except:
-                    print "Timeout exception"
+                except TimeoutException:
+                    print "Timeout exception: site " + article.link + "did not completely load in less than 60 seconds"
+
