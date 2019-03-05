@@ -9,17 +9,24 @@ app = Flask(__name__)
 
 @app.route('/')
 def main_screen():
-    try:
-        # TODO add a way to choose which region you want analyzed.
-        print monitor_prompt("Program Started. ")
-        browser = getBrowser_Firefox(invisible_window=True)
-        regions = process_regions(browser)
-        return render_template('layout.html', regions=regions, message="Welcome to your news digest")
-    except:
-        print "Process failed. Canceling operation"
-        return render_template("layout.html", message="Something failed. Please try again later.")
-    finally:
-        browser.quit()
+    attempts = 0
+    ATTEMPT_LIMIT = 3
+    while True:
+        try:
+            # TODO add a way to choose which region you want analyzed.
+            print monitor_prompt("Program Started. ")
+            browser = getBrowser_Firefox(invisible_window=True)
+            print monitor_prompt("Browser opened.")
+            regions = process_regions(browser)
+            print monitor_prompt("Process finished. ")
+            return render_template('layout.html', regions=regions, message="Welcome to your news digest")
+        except:
+            print "Process failed. Canceling operation"
+            attempts = attempts + 1
+            if attempts >= ATTEMPT_LIMIT:
+                return render_template("layout.html", message="Something failed. The program tried running for "+ ATTEMPT_LIMIT + " times. Please try again later.")
+        finally:
+            browser.quit()
 
 
 def process_regions(browser):
