@@ -10,13 +10,12 @@ app = Flask(__name__)
 def main_screen():
     # TODO add a way to choose which region you want analyzed.
     regions = process_regions()
-    # regions = getArgRegion()
     return render_template('layout.html', regions=regions)
 
 
 def process_regions():
     browser = getBrowser_Firefox(invisible_window=False)
-    regions = getArgRegion()
+    regions = getAutomaticRegions()
     TrendRetriever.getTrends_Trends24(regions, browser)
     NewsRetriever.TrendSearchPerRegionThroughSpecificMedia(regions, browser)
     print_regions(regions)

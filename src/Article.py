@@ -24,4 +24,5 @@ class Article:
         return False
 
     def __hash__(self):
-        return hash(self.link+self.title)
+        hash_text = self.title.replace(" ","")
+        return hash(hash_text)

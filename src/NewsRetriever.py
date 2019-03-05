@@ -4,7 +4,8 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 
 from Article import Article
-
+# todo add descriptive exceptions
+# todo improve system monitoring. Inform the user about what is being analyzed.
 
 def TrendSearch_Google(regions, browser):
     for region in regions:
@@ -17,25 +18,28 @@ def TrendSearch_Google(regions, browser):
 
 
 def TrendSearchPerRegionThroughSpecificMedia(regions, browser):
-    for region in regions:
-        for medium in region.getMedia():
-            browser.get(medium)
-            scrollToTheBottom(browser)
-            print medium
-            query = "//article"
-            matches = browser.find_elements_by_xpath(query)
-            articles = []
-            try:
-                for match in matches:
-                    article = Article(match.text, match.find_element_by_tag_name("a").get_attribute('href'), medium)
-                    articles.append(article)
-            except:
-                print
-            for article in articles:
-                for trend in region.getTrends():
-                    if trend in article.title:
-                        region.addUsefulLink(article, trend)
-        region.cleanArticles()
+    try:
+        for region in regions:
+            for medium in region.getMedia():
+                browser.get(medium)
+                scrollToTheBottom(browser)
+                print medium
+                query = "//article"
+                matches = browser.find_elements_by_xpath(query)
+                articles = []
+                try:
+                    for match in matches:
+                        article = Article(match.text, match.find_element_by_tag_name("a").get_attribute('href'), medium)
+                        articles.append(article)
+                except:
+                    print "Not possible to create article from "+match.text
+                for article in articles:
+                    for trend in region.getTrends():
+                        if trend in article.title:
+                            region.addUsefulLink(article, trend)
+            region.cleanArticles()
+    except:
+        print "Unable to access website"
 
 
 def scrollToTheBottom(browser):
@@ -64,5 +68,5 @@ def BodyRetriever(regions, browser):
                         if len(paragraph.text) > 100:
                             full_text = full_text + "\n" + paragraph.text
                         article.setBody(full_text)
-                except TimeoutException:
+                except:
                     print "Timeout exception"

@@ -7,8 +7,6 @@ def cleanTrends(trend):
     :param: trend: a string that is dirty. Has hashtag and camelcase
     :return: the same map, but clean (no hashtags or camelcase format)
     """
-    # TODO optimize this algorithm
-    # TODO solve for camel casing that is not actually camel casing. For example: BOCAxESPN, SCOvIRE
     if not trend:
         return trend
 
