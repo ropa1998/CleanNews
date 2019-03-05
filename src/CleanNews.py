@@ -14,9 +14,10 @@ def main_screen():
         print monitor_prompt("Program Started. ")
         browser = getBrowser_Firefox(invisible_window=True)
         regions = process_regions(browser)
-        return render_template('layout.html', regions=regions)
+        return render_template('layout.html', regions=regions, message="Welcome to your news digest")
     except:
         print "Process failed. Canceling operation"
+        return render_template("layout.html", message="Something failed. Please try again later.")
     finally:
         browser.quit()
 
