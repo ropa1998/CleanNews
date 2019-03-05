@@ -7,8 +7,6 @@ import datetime
 
 from Article import Article
 
-# todo add descriptive exceptions
-# todo improve system monitoring. Inform the user about what is being analyzed.
 # todo add documentation
 # todo add README
 from Utilities import monitor_prompt

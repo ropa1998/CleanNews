@@ -1,0 +1,35 @@
+# CleanNews
+
+The way in which we consume information is changing. Years ago no one would doubt that some mainstream media outlets provided quality information.
+But today selling has become more important. If there is nothing important they would still show you something for you to click and get them money and fill every possible space with an ad to keep on bombarding you with stuff you do not need. They would produce the so-called "sponsored content" to literally disguise an ad in the format of an article.
+And this is in the best cases: news outlets are becoming more and more biased. They show you just what they want to show you, isolating you from other ideas or even pushing their own agendas on you.
+This would not happen if we all were responsible citizens which would spend time on investigating, researching and thinking to form informed opinions on relevant subjects, but that is hard.
+Luckily, we have computers and most news outlets provide their articles for free online.
+
+
+CleanNews tries to:
+    make easier getting different opinions from different outlets by making it automatically.
+    avoid the obscene amount of advertising that we are exposed to in all web pages by not showing you all the browsing.
+    expose yourself to the relevant subjects that the society is talking about, gathering them from social media.
+
+
+
+
+
+## Usage
+
+```python
+import foobar
+
+foobar.pluralize('word') # returns 'words'
+foobar.pluralize('goose') # returns 'geese'
+foobar.singularize('phenomena') # returns 'phenomenon'
+```
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)

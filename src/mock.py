@@ -1,3 +1,3 @@
-import FTN
+import CleanNews
 
-FTN.process_regions()
+CleanNews.process_regions()

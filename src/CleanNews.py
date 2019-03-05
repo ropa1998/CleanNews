@@ -1,8 +1,8 @@
 from flask import Flask, render_template
+
 import NewsRetriever
 import TrendRetriever
-from Utilities import getArgRegion, getBrowser_Firefox, print_regions, getAutomaticRegions, monitor_prompt
-from selenium.common.exceptions import WebDriverException
+from Utilities import getArgRegion, getBrowser_Firefox, print_regions, monitor_prompt
 
 app = Flask(__name__)
 
