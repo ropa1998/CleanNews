@@ -6,6 +6,8 @@ from Utilities import getArgRegion, getBrowser_Firefox, print_regions, monitor_p
 
 app = Flask(__name__)
 
+# todo improve design and architecture
+
 
 @app.route('/')
 def main_screen():
@@ -13,6 +15,7 @@ def main_screen():
         # TODO add a way to choose which region you want analyzed.
         print monitor_prompt("Program Started. ")
         browser = getBrowser_Firefox(invisible_window=True)
+        print monitor_prompt("Browser Started. ")
         regions = process_regions(browser)
         return render_template('layout.html', regions=regions, message="Welcome to your news digest")
     except:

@@ -12,14 +12,14 @@ from Article import Article
 from Utilities import monitor_prompt
 
 
-def TrendSearch_Google(regions, browser):
-    for region in regions:
-        for trend in region.getTrends():
-            browser.get('http://www.google.com')
-            search = browser.find_element_by_name('q')
-            search.send_keys(trend)
-            search.send_keys(Keys.RETURN)
-            time.sleep(5)
+# def TrendSearch_Google(regions, browser):
+#     for region in regions:
+#         for trend in region.getTrends():
+#             browser.get('http://www.google.com')
+#             search = browser.find_element_by_name('q')
+#             search.send_keys(trend)
+#             search.send_keys(Keys.RETURN)
+#             time.sleep(5)
 
 
 def TrendSearchPerRegionThroughSpecificMedia(regions, browser):
@@ -67,7 +67,7 @@ def scrollToTheBottom(browser):
 
 def BodyRetriever(regions, browser):
     time_out = 60
-    print monitor_prompt("Gathering all articles' bodies")
+    print monitor_prompt("Gathering all articles' bodies. ")
     browser.set_page_load_timeout(time_out)
     for region in regions:
         for trend, article_list in region.get_news().items():
