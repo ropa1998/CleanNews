@@ -12,7 +12,7 @@ app = Flask(__name__)
 @app.route('/')
 def main_screen():
     print monitor_prompt("Program Started. ")
-    browser = getBrowser_Firefox(invisible_window=False)
+    browser = getBrowser_Firefox(invisible_window=True)
     print monitor_prompt("Browser Started. ")
     try:
         # TODO add a way to choose which region you want analyzed.
