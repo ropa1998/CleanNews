@@ -11,18 +11,19 @@ app = Flask(__name__)
 
 @app.route('/')
 def main_screen():
+    print monitor_prompt("Program Started. ")
+    browser = getBrowser_Firefox(invisible_window=False)
+    print monitor_prompt("Browser Started. ")
     try:
         # TODO add a way to choose which region you want analyzed.
-        print monitor_prompt("Program Started. ")
-        browser = getBrowser_Firefox(invisible_window=True)
-        print monitor_prompt("Browser Started. ")
         regions = process_regions(browser)
+        browser.quit()
         return render_template('layout.html', regions=regions, message="Welcome to your news digest")
     except:
         print "Process failed. Canceling operation"
-        return render_template("layout.html", message="Something failed. Please try again later.")
-    finally:
         browser.quit()
+        return render_template("layout.html", message="Something failed. Please try again later.")
+
 
 
 def process_regions(browser):

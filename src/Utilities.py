@@ -30,7 +30,7 @@ def getAutomaticRegions():
 
 def getArgRegion():
     arg_media = ["https://www.lanacion.com.ar/", "https://www.clarin.com/", "https://www.pagina12.com.ar/"]
-    # arg_media = ["https://www.clarin.com/"]
+    # arg_media = ["https://www.lanacion.com/"]
     arg_identifier = "argentina"
     arg_region = Region(media=arg_media, identifier=arg_identifier)
 
@@ -61,5 +61,6 @@ def print_regions(regions):
                 except NoSuchElementException:
                     print "An error ocurred."
 
+
 def monitor_prompt(message):
-    return message+str(datetime.datetime.now())
+    return message + " " + str(datetime.datetime.now())

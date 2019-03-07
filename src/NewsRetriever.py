@@ -81,5 +81,5 @@ def BodyRetriever(regions, browser):
                         if len(paragraph.text) > 100:
                             full_text = full_text + "\n" + paragraph.text
                         article.setBody(full_text)
-                except TimeoutException:
-                    print "Timeout exception: site " + article.link + " did not completely load in less than " + time_out + " seconds"
+                except:
+                    print "Something wrong happened. " + article.link + " will not be scrapped."
